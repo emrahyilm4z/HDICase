@@ -1,7 +1,10 @@
 package com.example.HDI.controller;
 
 import com.example.HDI.dto.request.AddStudentRequestDto;
+import com.example.HDI.dto.request.StudentRequestDto;
+import com.example.HDI.dto.request.TakeAndRemoveLessonRequestDto;
 import com.example.HDI.dto.request.UpdateStudentRequestDto;
+import com.example.HDI.dto.response.LessonResponseDto;
 import com.example.HDI.dto.response.StudentResponseDto;
 import com.example.HDI.service.StudentService;
 import lombok.AllArgsConstructor;
@@ -32,5 +35,18 @@ public class StudentsController {
         return new ResponseEntity<>(studentService.getAll(), HttpStatus.OK);
     }
 
+    @PostMapping("take")
+    public ResponseEntity<LessonResponseDto> take(@RequestBody TakeAndRemoveLessonRequestDto takeAndRemoveLessonRequestDto) {
+        return new ResponseEntity<>(studentService.takeALesson(takeAndRemoveLessonRequestDto), HttpStatus.OK);
+    }
 
+    @PostMapping("remove")
+    public ResponseEntity<LessonResponseDto> remove(@RequestBody TakeAndRemoveLessonRequestDto takeAndRemoveLessonRequestDto) {
+        return new ResponseEntity<>(studentService.removeLesson(takeAndRemoveLessonRequestDto), HttpStatus.OK);
+    }
+
+    @GetMapping("lessons")
+    public ResponseEntity<List<LessonResponseDto>> getAllLesson(@RequestBody StudentRequestDto studentRequestDto){
+        return new ResponseEntity<>(studentService.getAllLesson(studentRequestDto), HttpStatus.OK);
+    }
 }

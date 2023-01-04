@@ -1,8 +1,10 @@
 package com.example.HDI.controller;
 
 import com.example.HDI.dto.request.AddLessonRequestDto;
+import com.example.HDI.dto.request.LessonRequestDto;
 import com.example.HDI.dto.request.UpdateLessonRequestDto;
 import com.example.HDI.dto.response.LessonResponseDto;
+import com.example.HDI.dto.response.StudentResponseDto;
 import com.example.HDI.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("lesson")
 public class LessonsController {
     private LessonService lessonService;
+
     @PostMapping("add")
     public ResponseEntity<LessonResponseDto> add(@RequestBody AddLessonRequestDto addLessonRequestDto) {
         return new ResponseEntity<>(lessonService.add(addLessonRequestDto), HttpStatus.CREATED);
@@ -29,5 +32,10 @@ public class LessonsController {
     @GetMapping("getAll")
     public ResponseEntity<List<LessonResponseDto>> getAll() {
         return new ResponseEntity<>(lessonService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("students")
+    public ResponseEntity<List<StudentResponseDto>> getAllStudent(@RequestBody LessonRequestDto lessonRequestDto) {
+        return new ResponseEntity<>(lessonService.getAllStudent(lessonRequestDto), HttpStatus.OK);
     }
 }

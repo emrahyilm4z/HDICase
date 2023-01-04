@@ -42,5 +42,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> canNotUpdateException(CanNotUpdateException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(NotEnoughQuotaException.class)
+    public ResponseEntity<?> notEnoughQuotaException(NotEnoughQuotaException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 }

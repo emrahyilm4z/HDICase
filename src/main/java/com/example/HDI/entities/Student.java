@@ -22,4 +22,12 @@ public class Student {
     private String mail;
     @ManyToMany
     private Set<Lesson> lesson;
+
+    public void addLesson(Lesson lesson) {
+        this.lesson.add(lesson);
+    }
+
+    public void removeLesson(Lesson lesson) {
+        this.lesson.remove(lesson);
+    }
 }
