@@ -11,7 +11,6 @@ import com.example.HDI.entities.Student;
 import com.example.HDI.exception.NotEnoughQuotaException;
 import com.example.HDI.exception.StudentNotFoundException;
 import com.example.HDI.repository.StudentRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -49,7 +48,7 @@ public class StudentService {
     public LessonResponseDto takeALesson(TakeAndRemoveLessonRequestDto takeAndRemoveLessonRequestDto) {
         Lesson lesson = lessonService.findById(takeAndRemoveLessonRequestDto.getLessonId());
         Student student = studentRepository.findById(takeAndRemoveLessonRequestDto.getStudentId()).orElseThrow(StudentNotFoundException::new);
-        if (lesson.getQuota() < 1) {
+        if (lesson.getQuota() < 1 || student.getLesson().contains(lesson)) {
             throw new NotEnoughQuotaException();
         } else {
             lesson.setQuota(lesson.getQuota() - 1);
@@ -72,6 +71,6 @@ public class StudentService {
 
     public List<LessonResponseDto> getAllLesson(StudentRequestDto studentRequestDto) {
         Student student = studentRepository.findById(studentRequestDto.getId()).orElseThrow(StudentNotFoundException::new);
-        return lessonService.getAllLesson(student);
+        return student.getLesson().stream().map(item -> modelMapper.map(item, LessonResponseDto.class)).toList();
     }
 }

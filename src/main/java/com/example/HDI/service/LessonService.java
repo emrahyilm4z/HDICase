@@ -6,7 +6,6 @@ import com.example.HDI.dto.request.UpdateLessonRequestDto;
 import com.example.HDI.dto.response.LessonResponseDto;
 import com.example.HDI.dto.response.StudentResponseDto;
 import com.example.HDI.entities.Lesson;
-import com.example.HDI.entities.Student;
 import com.example.HDI.exception.CanNotUpdateException;
 import com.example.HDI.exception.LessonNotFoundException;
 import com.example.HDI.repository.LessonRepository;
@@ -55,10 +54,6 @@ public class LessonService {
 
     public void save(Lesson lesson) {
         lessonRepository.save(lesson);
-    }
-
-    public List<LessonResponseDto> getAllLesson(Student student) {
-        return lessonRepository.findByStudent(student).stream().map(item -> modelMapper.map(item, LessonResponseDto.class)).toList();
     }
 
     public List<StudentResponseDto> getAllStudent(LessonRequestDto lessonRequestDto) {
